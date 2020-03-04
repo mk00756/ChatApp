@@ -9,24 +9,29 @@ namespace Client
 {
     public partial class Form1 : Form
     {
-        bool connected = false;
-        ClientSocket client = new ClientSocket();
-        TcpClient tc = new TcpClient();
+        TcpClient tcpClient = new TcpClient();
+        NetworkStream networkStream;
+
 
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
             try
             {
-                tc.Connect(textIP.Text, int.Parse(textPort.Text));
+                tcpClient.Connect(textIP.Text, int.Parse(textPort.Text));
                 chatTextbox.AppendText("You have joined the chat" + Environment.NewLine);
                 btnConnect.Enabled = false;
+
+                Thread thread = new Thread(receiveMessage);
+                thread.Start();
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("No connection found");
             }
@@ -60,14 +65,12 @@ namespace Client
 
         public void sendMessage(string userInput)
         {
-            NetworkStream ns;
-
             try
             {
-                ns = tc.GetStream();
+                networkStream = tcpClient.GetStream();
                 byte[] data = Encoding.ASCII.GetBytes(userInput);
-                ns.Write(data, 0, data.Length);
-                ns.Flush();
+                networkStream.Write(data, 0, data.Length);
+                networkStream.Flush();
             }
             catch (Exception e)
             {
@@ -75,23 +78,28 @@ namespace Client
             }
 
         }
-        //public void ReceiveMessage(IAsyncResult ar)
-        //{
-        //    try
-        //    {
-        //        int bytesRead;
 
-        //        object[] para =
-        //        {
-        //            System.Text.Encoding.ASCII.GetString(data,0,bytesRead) };
-        //        this.Invoke(new delUp)
-        //    }
-        //}
-
-        public void appendText(string appendText)
+        private void receiveMessage()
         {
-            chatTextbox.AppendText(appendText +"\n");
-        }
+            while (true)
+            {
+                try
+                {
+                    networkStream = tcpClient.GetStream();
+                    int buffSize = 0;
+                    byte[] inStream = new byte[1024];
+                    buffSize = tcpClient.ReceiveBufferSize;
+                    networkStream.Read(inStream, 0, buffSize);
+                    string returndata = System.Text.Encoding.ASCII.GetString(inStream);
+                    chatTextbox.AppendText(returndata);
 
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+        }
     }
 }
