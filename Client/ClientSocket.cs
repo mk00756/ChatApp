@@ -11,6 +11,7 @@ namespace Client
     class ClientSocket
     {
         private static Socket client;
+        private TcpClient clientSocket;
         private IPAddress ipAddress;
         private int PortNumber;
 
@@ -31,11 +32,6 @@ namespace Client
 
                 Console.WriteLine("User has joined the room");
 
-                Thread thread1 = new Thread(() => sendMessage());
-                Thread thread2 = new Thread(() => recieveMessage());
-
-                thread1.Start();
-                thread2.Start();
             }
             catch (Exception excp)
             {
@@ -43,17 +39,14 @@ namespace Client
             }
         }
 
-        private void sendMessage()
+        public void sendMessage(string userInput)
         {
-            string userInput = string.Empty;
-
             try
             {
                 while (true)
                 {
                     // send messages
-
-                    userInput = Console.ReadLine();
+                    
                     byte[] buffSend = Encoding.ASCII.GetBytes(userInput);
                     client.Send(buffSend);
 

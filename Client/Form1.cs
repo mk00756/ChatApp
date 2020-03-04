@@ -24,5 +24,11 @@ namespace Client
             textMessage.Text = "Button is clicked";
             Console.WriteLine("Button is clicked");
         }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            client.sendMessage(textMessage.Text);
+            textMessage.Text = "";
+        }
     }
 }
