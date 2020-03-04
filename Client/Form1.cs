@@ -22,7 +22,7 @@ namespace Client
             {
                 string _ipAddress = textIP.Text;
                 string _portNumber =textPort.Text;
-                client.joinChatroom(_ipAddress, _portNumber);
+                client.joinChatroom(_ipAddress, int.Parse(_portNumber));
 
                 //chatTextbox.AppendText("You have joined the chat room \n\n");
             }

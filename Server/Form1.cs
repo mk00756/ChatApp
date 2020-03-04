@@ -30,13 +30,13 @@ namespace Server
                         server.ns = server.clientList[0].GetStream();
                         byte[] data = new byte[server.clientList[0].ReceiveBufferSize];
                         int numBytesRead = server.ns.Read(data, 0, System.Convert.ToInt32(server.clientList[0].ReceiveBufferSize));
-                        ChatTxt.Text += Encoding.ASCII.GetString(data, 0, numBytesRead) + "\n";
+                        //ChatTxt.AppendText(Encoding.ASCII.GetString(data, 0, numBytesRead) + "\n");
+                        ChatTxt.Text += "Received!\n";
                     }
                     catch { }
                 }
             });
             read.Start();
-            
         }
     }
 }
