@@ -9,7 +9,9 @@ namespace Client
 {
     public partial class Form1 : Form
     {
+        bool connected = false;
         ClientSocket client = new ClientSocket();
+        TcpClient tc = new TcpClient();
 
         public Form1()
         {
@@ -42,8 +44,13 @@ namespace Client
 
         private void testingMethod()
         {
-            TcpClient tc = new TcpClient();
-            tc.Connect("127.0.0.1", 25000);
+            
+            if (!connected)
+            {
+                tc.Connect("127.0.0.1", 25000);
+                connected = true;
+            }
+
 
             NetworkStream ns = tc.GetStream();
             byte[] data = Encoding.ASCII.GetBytes("Hello");

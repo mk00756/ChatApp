@@ -22,10 +22,12 @@ public class ChatServer
 
         Thread connectThread = new Thread(() =>
         {
-            clientList.Add(listenerSocket.AcceptTcpClient());
+            while (true)
+            {
+                clientList.Add(listenerSocket.AcceptTcpClient());
+            }
         });
         connectThread.Start();
-
     }
 
     public void broadcast(string msg)

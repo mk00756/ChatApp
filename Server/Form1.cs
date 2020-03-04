@@ -14,29 +14,43 @@ namespace Server
             InitializeComponent();
         }
 
-            private void HostBtn_Click(object sender, EventArgs e)
+        private void HostBtn_Click(object sender, EventArgs e)
         {
+            string text = "";
             string ipAddress = IPTxt.Text;
             int port = int.Parse(PortTxt.Text);
             ChatServer server = new ChatServer(port, ipAddress);
             HostBtn.Enabled = false;
+            //Thread read = new Thread(() => 
+            //{
+            //    while (true)
+            //    {
+            //        if (server.clientList.Count > 0)
+            //        {
+            //            try
+            //            {
+            //                server.ns = server.clientList[0].GetStream();
+            //                byte[] data = new byte[server.clientList[0].ReceiveBufferSize];
+            //                int numBytesRead = server.ns.Read(data, 0, System.Convert.ToInt32(server.clientList[0].ReceiveBufferSize));
+            //                text = Encoding.ASCII.GetString(data, 0, numBytesRead);
+            //            }
+            //            catch { }
+            //        }
+            //    }
+            //});
+            //read.Start();
 
-            Thread read = new Thread(() => 
+            while (true)
             {
-                while (true)
+                try
                 {
-                    try
-                    {
-                        server.ns = server.clientList[0].GetStream();
-                        byte[] data = new byte[server.clientList[0].ReceiveBufferSize];
-                        int numBytesRead = server.ns.Read(data, 0, System.Convert.ToInt32(server.clientList[0].ReceiveBufferSize));
-                        //ChatTxt.AppendText(Encoding.ASCII.GetString(data, 0, numBytesRead) + "\n");
-                        ChatTxt.Text += "Received!\n";
-                    }
-                    catch { }
+                    server.ns = server.clientList[server.clientList.Count - 1].GetStream();
+                    byte[] data = new byte[server.clientList[0].ReceiveBufferSize];
+                    int numBytesRead = server.ns.Read(data, 0, System.Convert.ToInt32(server.clientList[0].ReceiveBufferSize));
+                    ChatTxt.AppendText(Encoding.ASCII.GetString(data, 0, numBytesRead));
                 }
-            });
-            read.Start();
+                catch { }
+            }
         }
     }
 }
