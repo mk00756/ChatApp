@@ -19,29 +19,65 @@ namespace Client
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string _ipAddress = textIP.Text;
-                string _portNumber =textPort.Text;
-                client.joinChatroom(_ipAddress, int.Parse(_portNumber));
 
-                //chatTextbox.AppendText("You have joined the chat room \n\n");
-            }
-            catch (Exception excp)
-            {
-                chatTextbox.AppendText("Cannot connect to the server \n\n");
-            }
+        {
+            testingMethod();
+            //    try
+            //    {
+            //        string _ipAddress = textIP.Text;
+            //        string _portNumber = textPort.Text;
+            //        client.joinChatroom(_ipAddress, int.Parse(_portNumber));
+
+            //        //string _ipAddress = textIP.Text;
+            //        //string _portNumber =textPort.Text;
+            //        //client.joinChatroom(_ipAddress, int.Parse(_portNumber));
+
+            //        //chatTextbox.AppendText("You have joined the chat room \n\n");
+            //    }
+            //    catch (Exception excp)
+            //    {
+            //        chatTextbox.AppendText("Cannot connect to the server \n\n");
+            //    }
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            testingMethod();
+            string userinput = textMessage.Text.ToString();
+            client.sendMessage(userinput);
 
             //client.sendMessage(textMessage.Text);
             //textMessage.Text = "";
         }
 
+        public void sendMessage(string userInput)
+        {
+            NetworkStream ns;
+
+            try
+            {
+                ns = tc.GetStream();
+                byte[] data = Encoding.ASCII.GetBytes(userInput);
+                ns.Write(data, 0, data.Length);
+                ns.Flush();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+        }
+        //public void ReceiveMessage(IAsyncResult ar)
+        //{
+        //    try
+        //    {
+        //        int bytesRead;
+
+        //        object[] para =
+        //        {
+        //            System.Text.Encoding.ASCII.GetString(data,0,bytesRead) };
+        //        this.Invoke(new delUp)
+        //    }
+        //}
         private void testingMethod()
         {
             
@@ -52,10 +88,10 @@ namespace Client
             }
 
 
-            NetworkStream ns = tc.GetStream();
-            byte[] data = Encoding.ASCII.GetBytes("Hello");
+            //NetworkStream ns = tc.GetStream();
+            //byte[] data = Encoding.ASCII.GetBytes("Hello");
 
-            ns.Write(data, 0, data.Length);
+            //ns.Write(data, 0, data.Length);
         }
 
         public void appendText(string appendText)

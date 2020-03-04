@@ -10,15 +10,20 @@ namespace Client
 {
     class ClientSocket
     {
-        private static Socket client;
-        private TcpClient clientSocket;
-        private IPAddress ipAddress;
-        private int PortNumber;
+        //private static Socket client;
+        //private TcpClient clientSocket;
+        //private IPAddress ipAddress;
+        //private int PortNumber;
+        //private static NetworkStream ns;
+        private ClientSocket client;
+        private TcpClient tc;
+
+
 
 
         public ClientSocket()
         {
-            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
 
         }
@@ -28,7 +33,8 @@ namespace Client
             try
             {
                 // connect to the server
-                client.Connect(_ipAddress, _portNumber);
+                //clientSocket.Connect(_ipAddress, _portNumber);
+                tc.Connect("127.0.0.1", 25000);
 
                 Console.WriteLine("User has joined the room");
 
@@ -41,42 +47,24 @@ namespace Client
 
         public void sendMessage(string userInput)
         {
+            NetworkStream ns;
+
             try
             {
-                while (true)
-                {
-                    // send messages
-                    
-                    byte[] buffSend = Encoding.ASCII.GetBytes(userInput);
-                    client.Send(buffSend);
-
-                    // append textbox
-                }
+                ns = tc.GetStream();
+                byte[] data = Encoding.ASCII.GetBytes(userInput);
+                ns.Write(data, 0, data.Length);
             }
-            catch (Exception excp)
+            catch(Exception e)
             {
-                Console.WriteLine(excp.ToString());
+                Console.WriteLine(e);
             }
+
         }
 
-        private void recieveMessage()
+        public void ReceiveData()
         {
-            try
-            {
-                while (true)
-                {
-                    // recieve messages
-                    byte[] buffReceive = new byte[1024];
-                    int nRecv = client.Receive(buffReceive);
 
-                    string textRecieved = Encoding.ASCII.GetString(buffReceive, 0, nRecv);
-
-                }
-            }
-            catch (Exception excp)
-            {
-                Console.WriteLine(excp.ToString());
-            }
         }
 
     }
