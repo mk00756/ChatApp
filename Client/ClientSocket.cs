@@ -47,28 +47,42 @@ namespace Client
         {
             string userInput = string.Empty;
 
-            while (true)
+            try
             {
-                // send messages
+                while (true)
+                {
+                    // send messages
 
-                userInput = Console.ReadLine();
-                byte[] buffSend = Encoding.ASCII.GetBytes(userInput);
-                client.Send(buffSend);
+                    userInput = Console.ReadLine();
+                    byte[] buffSend = Encoding.ASCII.GetBytes(userInput);
+                    client.Send(buffSend);
 
-                // append textbox
+                    // append textbox
+                }
+            }
+            catch (Exception excp)
+            {
+                Console.WriteLine(excp.ToString());
             }
         }
 
         private void recieveMessage()
         {
-            while (true)
+            try
             {
-                // recieve messages
-                byte[] buffReceive = new byte[1024];
-                int nRecv = client.Receive(buffReceive);
+                while (true)
+                {
+                    // recieve messages
+                    byte[] buffReceive = new byte[1024];
+                    int nRecv = client.Receive(buffReceive);
 
-                string textRecieved = Encoding.ASCII.GetString(buffReceive, 0, nRecv);
-                
+                    string textRecieved = Encoding.ASCII.GetString(buffReceive, 0, nRecv);
+
+                }
+            }
+            catch (Exception excp)
+            {
+                Console.WriteLine(excp.ToString());
             }
         }
 
