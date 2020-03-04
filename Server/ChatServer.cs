@@ -3,22 +3,30 @@ using System.Text;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 public class ChatServer
 {
     public TcpListener listenerSocket { get; set; }
-    public List<TcpClient> clientList { get; set; }
+    public List<TcpClient> clientList { get; set; } = new List<TcpClient>();
     public IPAddress ipAddress { get; set; }
     public int port { get; set; }
     public IPEndPoint ipep { get; set; }
     public NetworkStream ns { get; set; }
 
     public ChatServer(int port, string ipAddress)
-	{
+    {
         this.ipAddress = IPAddress.Parse(ipAddress);
         listenerSocket = new TcpListener(this.ipAddress, port);
         listenerSocket.Start();
-        clientList.Add(listenerSocket.AcceptTcpClient());
+
+        Thread connectThread = new Thread(() => {
+        while (true)
+        {
+            clientList.Add(listenerSocket.AcceptTcpClient());
+        } });
+        connectThread.Start();
+        
 	}
 
     public void broadcast(string msg)

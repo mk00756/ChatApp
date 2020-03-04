@@ -19,6 +19,7 @@ namespace Server
             string ipAddress = IPTxt.Text;
             int port = int.Parse(PortTxt.Text);
             ChatServer server = new ChatServer(port, ipAddress);
+            HostBtn.Enabled = false;
         }
     }
 }
