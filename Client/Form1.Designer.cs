@@ -64,6 +64,7 @@
             // 
             // chatTextbox
             // 
+            this.chatTextbox.Enabled = false;
             this.chatTextbox.Location = new System.Drawing.Point(13, 52);
             this.chatTextbox.Multiline = true;
             this.chatTextbox.Name = "chatTextbox";

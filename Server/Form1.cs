@@ -48,6 +48,7 @@ namespace Server
                     byte[] data = new byte[server.clientList[0].ReceiveBufferSize];
                     int numBytesRead = server.ns.Read(data, 0, System.Convert.ToInt32(server.clientList[0].ReceiveBufferSize));
                     ChatTxt.AppendText(Encoding.ASCII.GetString(data, 0, numBytesRead));
+                    ChatTxt.AppendText(Environment.NewLine);
                 }
                 catch { }
             }

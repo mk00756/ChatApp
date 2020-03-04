@@ -19,9 +19,17 @@ namespace Client
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
-
         {
-            testingMethod();
+            try
+            {
+                tc.Connect(textIP.Text, int.Parse(textPort.Text));
+                chatTextbox.AppendText("You have joined the chat" + Environment.NewLine);
+                btnConnect.Enabled = false;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("No connection found");
+            }
             //    try
             //    {
             //        string _ipAddress = textIP.Text;
@@ -43,10 +51,11 @@ namespace Client
         private void btnSend_Click(object sender, EventArgs e)
         {
             string userinput = textMessage.Text.ToString();
-            client.sendMessage(userinput);
+            sendMessage(userinput);
 
             //client.sendMessage(textMessage.Text);
             //textMessage.Text = "";
+            textMessage.Text = "";
         }
 
         public void sendMessage(string userInput)
@@ -78,21 +87,6 @@ namespace Client
         //        this.Invoke(new delUp)
         //    }
         //}
-        private void testingMethod()
-        {
-            
-            if (!connected)
-            {
-                tc.Connect("127.0.0.1", 25000);
-                connected = true;
-            }
-
-
-            //NetworkStream ns = tc.GetStream();
-            //byte[] data = Encoding.ASCII.GetBytes("Hello");
-
-            //ns.Write(data, 0, data.Length);
-        }
 
         public void appendText(string appendText)
         {
