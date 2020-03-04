@@ -13,8 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerTest", "ServerTest\Se
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C891D3AC-F287-466D-93CA-0F99F1C2FDBD}"
 	ProjectSection(SolutionItems) = preProject
+		ChatServer.cs = ChatServer.cs
 		Client.cs = Client.cs
-		Server.cs = Server.cs
 	EndProjectSection
 EndProject
 Global
