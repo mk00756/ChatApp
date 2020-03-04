@@ -20,14 +20,13 @@ public class ChatServer
         listenerSocket = new TcpListener(this.ipAddress, port);
         listenerSocket.Start();
 
-        Thread connectThread = new Thread(() => {
-        while (true)
+        Thread connectThread = new Thread(() =>
         {
             clientList.Add(listenerSocket.AcceptTcpClient());
-        } });
+        });
         connectThread.Start();
-        
-	}
+
+    }
 
     public void broadcast(string msg)
     {

@@ -18,7 +18,15 @@ public class ChatServer
         this.ipAddress = IPAddress.Parse(ipAddress);
         listenerSocket = new TcpListener(ipAddress, port);
         listenerSocket.Start();
-        clientList.Add(listenerSocket.AcceptTcpClient());
+
+        Thread connect = new Thread(() => 
+        {
+            while (true)
+            {
+                clientList.Add(listenerSocket.AcceptTcpClient());
+            }
+        });
+        connect.Start();
 	}
 
     public void broadcast(string msg)

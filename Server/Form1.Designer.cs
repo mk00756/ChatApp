@@ -31,6 +31,7 @@
             this.IPTxt = new System.Windows.Forms.TextBox();
             this.PortTxt = new System.Windows.Forms.TextBox();
             this.HostBtn = new System.Windows.Forms.Button();
+            this.ChatTxt = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // IPTxt
@@ -59,11 +60,21 @@
             this.HostBtn.UseVisualStyleBackColor = true;
             this.HostBtn.Click += new System.EventHandler(this.HostBtn_Click);
             // 
+            // ChatTxt
+            // 
+            this.ChatTxt.Enabled = false;
+            this.ChatTxt.Location = new System.Drawing.Point(12, 12);
+            this.ChatTxt.Multiline = true;
+            this.ChatTxt.Name = "ChatTxt";
+            this.ChatTxt.Size = new System.Drawing.Size(260, 182);
+            this.ChatTxt.TabIndex = 3;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.ChatTxt);
             this.Controls.Add(this.HostBtn);
             this.Controls.Add(this.PortTxt);
             this.Controls.Add(this.IPTxt);
@@ -79,6 +90,7 @@
         private System.Windows.Forms.TextBox IPTxt;
         private System.Windows.Forms.TextBox PortTxt;
         private System.Windows.Forms.Button HostBtn;
+        private System.Windows.Forms.TextBox ChatTxt;
     }
 }
 

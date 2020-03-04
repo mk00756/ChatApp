@@ -20,6 +20,23 @@ namespace Server
             int port = int.Parse(PortTxt.Text);
             ChatServer server = new ChatServer(port, ipAddress);
             HostBtn.Enabled = false;
+
+            Thread read = new Thread(() => 
+            {
+                while (true)
+                {
+                    try
+                    {
+                        server.ns = server.clientList[0].GetStream();
+                        byte[] data = new byte[server.clientList[0].ReceiveBufferSize];
+                        int numBytesRead = server.ns.Read(data, 0, System.Convert.ToInt32(server.clientList[0].ReceiveBufferSize));
+                        ChatTxt.Text += Encoding.ASCII.GetString(data, 0, numBytesRead) + "\n";
+                    }
+                    catch { }
+                }
+            });
+            read.Start();
+            
         }
     }
 }
